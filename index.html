@@ -1,10 +1,257 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>我的網站</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0E6; --ink:#1A1A1A; --ink2:#6B665B; --white:#FFFFFF;
+  --yellow:#FBEE55; --f:"Huninn","Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; min-height:100vh; background:var(--cream); color:var(--ink); font-family:var(--f); line-height:1.7; -webkit-text-size-adjust:100%; }
+a{ color:inherit; }
+
+.top{ display:flex; justify-content:space-between; align-items:center; gap:12px; padding:18px 20px 6px; max-width:1100px; margin:0 auto; }
+.logo{ font-family:"Noto Sans TC",sans-serif; font-weight:900; font-size:clamp(20px,3.4vw,30px); letter-spacing:.28em; text-decoration:none; }
+.nav a{ text-decoration:none; font-size:14px; border:2px solid var(--ink); border-radius:999px; padding:6px 16px; margin-left:8px; }
+main{ max-width:1100px; margin:0 auto; padding:6px 20px 56px; }
+.hint{ font-size:13px; color:var(--ink2); margin:0 0 10px; }
+
+/* ---------- Home stage ---------- */
+.stage{ position:relative; aspect-ratio:16/10; }
+.el{ position:absolute; left:1%; right:1%; top:9%; bottom:9%; background:var(--ink); border-radius:50%; }
+.tag{ position:absolute; left:3%; top:2%; z-index:5; transform:rotate(-5deg); background:var(--yellow); padding:.15em .8em; border-radius:10px; font-weight:700; font-size:clamp(13px,2vw,20px); }
+.ctw{ position:absolute; left:39%; width:22%; top:49%; transform:translateY(-50%); z-index:3; }
+.ct{ display:flex; flex-direction:column; align-items:center; justify-content:center; aspect-ratio:1; background:#92D9DB center/cover no-repeat; border-radius:52% 48% 55% 45% / 48% 54% 46% 52%; border:5px solid var(--cream); cursor:pointer; text-align:center; font-size:clamp(11px,1.5vw,14px); line-height:1.6; padding:10px; animation:bob 9s ease-in-out infinite; }
+.ct b{ font-size:clamp(12px,1.7vw,16px); margin-bottom:4px; }
+.ct.has b,.ct.has span{ display:none; }
+
+.it{ position:absolute; left:calc(var(--x)*1%); top:calc(var(--y)*1%); width:calc(var(--w)*1%); z-index:2; display:block; text-decoration:none; color:inherit; animation:bob var(--dur) ease-in-out infinite; animation-delay:var(--dl); -webkit-tap-highlight-color:transparent; }
+.it.deco{ pointer-events:none; z-index:1; }
+.sp svg{ width:100%; height:auto; display:block; overflow:visible; }
+.sp{ transition:transform .2s; }
+@keyframes bob{ 0%,100%{transform:translate(0,0) rotate(-2deg)} 25%{transform:translate(8px,-7px) rotate(2deg)} 50%{transform:translate(0,-13px) rotate(3deg)} 75%{transform:translate(-8px,-6px) rotate(-1deg)} }
+
+.tp{ position:absolute; top:100%; left:50%; transform:translateX(-50%); width:clamp(150px,18vw,210px); background:var(--white); color:var(--ink); border:2.5px solid var(--ink); border-radius:14px; padding:9px 12px; font-size:clamp(11px,1.4vw,13px); line-height:1.6; opacity:0; pointer-events:none; z-index:30; }
+.tp.l{ left:0; transform:none; }
+.tp.r{ left:auto; right:0; transform:none; }
+.tp.up{ top:auto; bottom:100%; }
+.tp b{ display:block; font-size:clamp(13px,1.6vw,15px); margin-bottom:2px; }
+.tp u{ display:block; margin-top:4px; text-decoration:none; font-size:12px; color:var(--ink2); }
+
+/* ---------- Category page ---------- */
+.chead{ display:flex; align-items:center; gap:clamp(14px,3vw,28px); background:var(--c); border:3px solid var(--ink); border-radius:28px; padding:clamp(14px,2.6vw,24px) clamp(18px,3vw,32px); margin-bottom:14px; }
+.chead .sp{ width:clamp(70px,12vw,110px); flex:none; }
+.chead h1{ margin:0 0 2px; font-size:clamp(24px,4.4vw,38px); font-weight:900; font-family:"Noto Sans TC",var(--f); }
+.chead p{ margin:0; font-size:14px; }
+
+.cards{ position:relative; aspect-ratio:var(--ar,16/10); background-color:#ECE6D8; background-image:radial-gradient(#D6CFBE 1.6px,transparent 1.6px); background-size:22px 22px; border-radius:28px; }
+.cd{ position:absolute; left:calc(var(--cx)*1%); top:calc(var(--cy)*1%); width:15%; aspect-ratio:132/172; perspective:800px; display:block; text-decoration:none; color:inherit; animation:dr var(--t) ease-in-out infinite alternate; animation-delay:var(--d); -webkit-tap-highlight-color:transparent; }
+@keyframes dr{ from{transform:translate(0,0) rotate(var(--r0))} to{transform:translate(var(--dx),var(--dy)) rotate(var(--r1))} }
+.in{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+.fc{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:8%; }
+.fr{ background:var(--c); border:3px solid var(--ink); }
+.fr .sp{ width:66%; margin-bottom:8%; }
+.fr span{ font-size:clamp(11px,1.5vw,15px); font-weight:700; line-height:1.4; }
+.bk{ background:var(--ink); color:var(--cream); transform:rotateY(180deg); font-size:clamp(10px,1.25vw,13px); line-height:1.6; }
+.bk b{ display:block; font-size:clamp(12px,1.5vw,15px); margin-bottom:4px; color:var(--c); }
+.bk em{ font-style:normal; margin-top:8px; font-size:.9em; text-decoration:underline; }
+
+@media (hover:hover) and (pointer:fine){
+  .it:hover{ animation-play-state:paused; z-index:20; }
+  .it:hover .sp{ transform:scale(1.1) rotate(-5deg); }
+  .it:hover .tp{ opacity:1; }
+  .cd:hover{ animation-play-state:paused; z-index:10; }
+  .cd:hover .in{ transform:rotateY(180deg); }
+}
+.it.act{ animation-play-state:paused; z-index:20; }
+.it.act .sp{ transform:scale(1.1) rotate(-5deg); }
+.it.act .tp{ opacity:1; }
+.cd.flip{ animation-play-state:paused; z-index:10; }
+.cd.flip .in{ transform:rotateY(180deg); }
+
+/* ---------- Detail ---------- */
+.dt{ background:var(--white); border:3px solid var(--ink); border-radius:28px; padding:clamp(16px,3vw,30px); }
+.dt .hd{ display:flex; align-items:center; gap:clamp(14px,3vw,26px); background:var(--c); border:3px solid var(--ink); border-radius:22px; padding:clamp(14px,3vw,24px); margin-bottom:16px; }
+.dt .hd .sp{ width:clamp(80px,14vw,130px); flex:none; }
+.dt h1{ font-size:clamp(20px,3.6vw,32px); font-weight:900; font-family:"Noto Sans TC",var(--f); margin:0 0 4px; line-height:1.4; }
+.dt .sub{ font-size:14px; }
+.blk{ border-top:2px solid var(--ink); padding:16px 4px; }
+.blk h2{ font-size:15px; margin:0 0 6px; font-weight:900; font-family:"Noto Sans TC",var(--f); }
+.blk p{ margin:0; font-size:15px; color:var(--ink2); }
+.btns{ display:flex; flex-wrap:wrap; gap:10px; margin:12px 0 4px; }
+.btn{ display:inline-block; background:var(--ink); color:var(--cream); border-radius:999px; padding:10px 20px; text-decoration:none; font-size:14px; }
+.btn.alt{ background:transparent; color:var(--ink); border:2px solid var(--ink); padding:8px 18px; }
+.mini{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+.mini a{ width:clamp(54px,9vw,72px); padding:8px; background:var(--c); border:3px solid transparent; border-radius:16px; }
+.mini a.cur{ border-color:var(--ink); }
+
+@media (max-width:700px){
+  .stage{ aspect-ratio:3/4; }
+  .ctw{ left:32%; width:36%; }
+  .it{ left:calc(var(--mx)*1%); top:calc(var(--my)*1%); width:calc(var(--mw)*1%); }
+  .tag{ top:1%; }
+  .cards{ aspect-ratio:auto; height:calc(var(--rows)*0.64*(100vw - 40px) + 28px); }
+  .cd{ left:calc(3% + var(--mc)*50%); top:calc(var(--mr)*0.64*(100vw - 40px) + 14px); width:44%; }
+}
+@media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
 </head>
 <body>
-  <h1>哈囉，這是我的第一個網站！</h1>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="g-star" viewBox="0 0 100 100"><polygon points="50,8 61,38 93,38 67,57 77,90 50,70 23,90 33,57 7,38 39,38" fill="#FBEE55" stroke="#FBEE55" stroke-width="7" stroke-linejoin="round"/><ellipse cx="41" cy="50" rx="5" ry="6.5" fill="#fff"/><circle cx="42" cy="51" r="3" fill="#1A1A1A"/><ellipse cx="59" cy="50" rx="5" ry="6.5" fill="#fff"/><circle cx="60" cy="51" r="3" fill="#1A1A1A"/><path d="M44 63 Q50 69 56 63" stroke="#1A1A1A" stroke-width="2.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="g-pc" viewBox="0 0 100 100"><rect x="10" y="12" width="80" height="58" rx="14" fill="#7062BD"/><rect x="19" y="21" width="62" height="40" rx="8" fill="#B8AEE8"/><circle cx="40" cy="38" r="3.6" fill="#1A1A1A"/><circle cx="60" cy="38" r="3.6" fill="#1A1A1A"/><path d="M43 48 Q50 54 57 48" stroke="#1A1A1A" stroke-width="2.6" fill="none" stroke-linecap="round"/><rect x="42" y="70" width="16" height="9" fill="#7062BD"/><rect x="28" y="78" width="44" height="9" rx="4.5" fill="#7062BD"/></symbol>
+<symbol id="g-rocket" viewBox="0 0 100 100"><path d="M34 62 L14 86 L36 78Z" fill="#EA4D2E"/><path d="M66 62 L86 86 L64 78Z" fill="#EA4D2E"/><path d="M50 4 C70 22 74 48 69 76 L31 76 C26 48 30 22 50 4Z" fill="#F5F0E6"/><path d="M50 4 C58 11 63 18 66 26 L34 26 C37 18 42 11 50 4Z" fill="#EA4D2E"/><ellipse cx="43" cy="38" rx="4" ry="5" fill="#fff" stroke="#1A1A1A" stroke-width="1"/><circle cx="44" cy="39" r="2.4" fill="#1A1A1A"/><ellipse cx="57" cy="38" rx="4" ry="5" fill="#fff" stroke="#1A1A1A" stroke-width="1"/><circle cx="58" cy="39" r="2.4" fill="#1A1A1A"/><path d="M45 48 Q50 53 55 48" stroke="#1A1A1A" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="50" cy="63" r="6" fill="#92D9DB"/><path d="M40 78 Q50 100 60 78Z" fill="#F9A02F"/></symbol>
+<symbol id="g-bat" viewBox="0 0 100 100"><path d="M50 42 C32 20 10 30 5 54 C17 47 23 56 29 64 C35 54 43 56 50 64 C57 56 65 54 71 64 C77 56 83 47 95 54 C90 30 68 20 50 42Z" fill="#1BA36F"/><circle cx="50" cy="50" r="19" fill="#1BA36F"/><polygon points="36,38 38,22 48,34" fill="#1BA36F"/><polygon points="64,38 62,22 52,34" fill="#1BA36F"/><ellipse cx="43" cy="49" rx="4.5" ry="6" fill="#fff"/><circle cx="44" cy="50" r="2.8" fill="#1A1A1A"/><ellipse cx="57" cy="49" rx="4.5" ry="6" fill="#fff"/><circle cx="58" cy="50" r="2.8" fill="#1A1A1A"/><path d="M45 60 Q50 64 55 60" stroke="#1A1A1A" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="g-bulb" viewBox="0 0 100 100"><circle cx="50" cy="42" r="30" fill="#FDB6B6"/><path d="M38 66 L62 66 L58 74 L42 74Z" fill="#FDB6B6"/><ellipse cx="41" cy="40" rx="4.5" ry="6" fill="#fff"/><circle cx="42" cy="41" r="2.8" fill="#1A1A1A"/><ellipse cx="59" cy="40" rx="4.5" ry="6" fill="#fff"/><circle cx="60" cy="41" r="2.8" fill="#1A1A1A"/><path d="M44 53 Q50 58 56 53" stroke="#1A1A1A" stroke-width="2.4" fill="none" stroke-linecap="round"/><rect x="38" y="74" width="24" height="8" rx="3" fill="#F5F0E6"/><rect x="42" y="83" width="16" height="7" rx="3" fill="#C9C5BA"/></symbol>
+<symbol id="g-earth" viewBox="0 0 100 100"><path d="M50 12 C74 10 90 30 88 52 C86 76 66 90 46 88 C24 86 10 68 12 46 C14 26 30 14 50 12Z" fill="#92D9DB"/><path d="M22 58 Q34 50 44 62 Q38 76 24 72Z" fill="#1BA36F"/><path d="M60 64 Q74 56 80 68 Q72 82 58 76Z" fill="#1BA36F"/><ellipse cx="41" cy="40" rx="4.5" ry="6" fill="#fff"/><circle cx="42" cy="41" r="2.8" fill="#1A1A1A"/><ellipse cx="59" cy="40" rx="4.5" ry="6" fill="#fff"/><circle cx="60" cy="41" r="2.8" fill="#1A1A1A"/><path d="M45 52 Q50 56 55 52" stroke="#1A1A1A" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="g-moon" viewBox="0 0 100 100"><path d="M64 8 C34 12 14 36 16 62 C18 86 44 98 68 90 C46 80 40 56 50 36 C55 26 61 17 64 8Z" fill="#FBEE55"/><ellipse cx="33" cy="58" rx="4.5" ry="6" fill="#fff"/><circle cx="34" cy="59" r="2.8" fill="#1A1A1A"/><path d="M30 72 Q38 77 44 71" stroke="#1A1A1A" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="76" cy="30" r="4" fill="#FBEE55"/><circle cx="86" cy="50" r="2.6" fill="#FBEE55"/></symbol>
+<symbol id="g-telescope" viewBox="0 0 100 100"><path d="M40 62 L26 94" stroke="#F9A02F" stroke-width="7" stroke-linecap="round"/><path d="M56 62 L72 94" stroke="#F9A02F" stroke-width="7" stroke-linecap="round"/><g transform="rotate(-28 50 46)"><rect x="12" y="34" width="62" height="26" rx="8" fill="#7062BD"/><rect x="66" y="30" width="16" height="34" rx="6" fill="#B8AEE8"/><rect x="4" y="38" width="12" height="18" rx="5" fill="#B8AEE8"/><ellipse cx="34" cy="45" rx="4" ry="5.5" fill="#fff"/><circle cx="35" cy="46" r="2.6" fill="#1A1A1A"/><ellipse cx="50" cy="45" rx="4" ry="5.5" fill="#fff"/><circle cx="51" cy="46" r="2.6" fill="#1A1A1A"/><path d="M38 54 Q42 57 46 54" stroke="#1A1A1A" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></symbol>
+<symbol id="g-burst" viewBox="0 0 100 100"><polygon points="50,2 60,30 90,18 72,44 98,56 68,62 82,92 54,74 42,98 36,70 6,80 28,54 4,36 34,36 28,6 46,28" fill="#FDB6B6"/></symbol>
+</defs></svg>
+
+<div class="top">
+  <a class="logo" href="#/">ENYA</a>
+  <div class="nav"><a href="#/">首頁</a></div>
+</div>
+<main id="app"></main>
+
+<script>
+function sv(id){ return '<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#g-'+id+'"/></svg>'; }
+
+/* ---------- content: categories (home stickers) and their cards ---------- */
+var CATS=[
+ {id:'star',  name:'天文',     ch:'star',   bg:'#FBEE55', x:10,y:18,w:15,   mx:4, my:16,mw:26, dur:8,  dl:0,    al:'l',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'天文營',ic:'telescope'},{n:'路邊天文',ic:'moon'},{n:'[事件名稱 3]',ic:'star'}]},
+ {id:'pc',    name:'資訊',     ch:'pc',     bg:'#B8AEE8', x:62,y:8, w:15.5, mx:60,my:6, mw:28, dur:9,  dl:-3,   al:'r',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'[事件名稱 1]',ic:'pc'},{n:'[事件名稱 2]',ic:'pc'},{n:'[事件名稱 3]',ic:'pc'}]},
+ {id:'rocket',name:'火箭',     ch:'rocket', bg:'#F58A6E', x:78,y:36,w:14,   mx:68,my:28,mw:26, dur:10, dl:-1,   al:'r',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'[事件名稱 1]',ic:'rocket'},{n:'[事件名稱 2]',ic:'rocket'},{n:'[事件名稱 3]',ic:'rocket'}]},
+ {id:'bat',   name:'狐蝠',     ch:'bat',    bg:'#7FD3A8', x:4, y:50,w:16,   mx:2, my:36,mw:28, dur:7.5, dl:-4,   al:'l',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'[事件名稱 1]',ic:'bat'},{n:'[事件名稱 2]',ic:'bat'},{n:'[事件名稱 3]',ic:'bat'}]},
+ {id:'bulb',  name:'發明',     ch:'bulb',   bg:'#FDB6B6', x:62,y:62,w:14,   mx:62,my:66,mw:26, dur:9.5, dl:-6,   al:'r up',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'[事件名稱 1]',ic:'bulb'},{n:'[事件名稱 2]',ic:'bulb'},{n:'[事件名稱 3]',ic:'bulb'}]},
+ {id:'earth', name:'公費留美', ch:'earth',  bg:'#92D9DB', x:24,y:66,w:15,   mx:14,my:70,mw:26, dur:8.5, dl:-2.5, al:'l up',
+  intro:'[這個類別的一句話介紹]',
+  cards:[{n:'[事件名稱 1]',ic:'earth'},{n:'[事件名稱 2]',ic:'earth'},{n:'[事件名稱 3]',ic:'earth'}]}
+];
+var CM={};CATS.forEach(function(c){CM[c.id]=c;});
+var DECO=[{x:80,y:72,w:7,mx:80,my:78,mw:12,dur:11,dl:-2},{x:45,y:82,w:5,mx:46,my:88,mw:9,dur:9,dl:-5},{x:47,y:11,w:4.5,mx:44,my:20,mw:9,dur:10,dl:-1}];
+
+/* card positions: desktop slots by count */
+function slots(n){
+  if(n<=3)return [[8,26],[40,22],[72,28]].slice(0,n);
+  if(n===4)return [[10,10],[60,12],[14,52],[62,54]];
+  return [[7,9],[39,5],[71,11],[13,53],[45,55],[75,50]].slice(0,n);
+}
+var DX=['24px','-20px','-18px','22px','-22px','16px'],DY=['16px','22px','14px','-18px','-14px','-20px'];
+var TT=[5,6,7,6.5,5.5,7.5],DD=[0,-1,-2,-3,-1.5,-4],R0=['-3deg','2deg','-2deg','3deg','-3deg','2deg'],R1=['3deg','-3deg','3deg','-2deg','2deg','-3deg'];
+
+var app=document.getElementById('app');
+var canHover=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ---------- views ---------- */
+function renderHome(){
+  var items=CATS.map(function(c){
+    return '<a class="it" href="#/c/'+c.id+'" style="--x:'+c.x+';--y:'+c.y+';--w:'+c.w+';--mx:'+c.mx+';--my:'+c.my+';--mw:'+c.mw+';--dur:'+c.dur+'s;--dl:'+c.dl+'s" aria-label="'+c.name+'">'
+      +'<div class="sp">'+sv(c.ch)+'</div>'
+      +'<div class="tp '+c.al+'"><b>'+c.name+'</b>[吸引人的一句話介紹]<u>點進去看卡牌 →</u></div></a>';
+  }).join('');
+  var decos=DECO.map(function(d){
+    return '<div class="it deco" style="--x:'+d.x+';--y:'+d.y+';--w:'+d.w+';--mx:'+d.mx+';--my:'+d.my+';--mw:'+d.mw+';--dur:'+d.dur+'s;--dl:'+d.dl+'s"><div class="sp">'+sv('burst')+'</div></div>';
+  }).join('');
+  app.innerHTML='<p class="hint">點一個小物，看看裡面有什麼。</p>'
+    +'<div class="stage"><div class="el"></div><div class="tag">[你的標語放這裡]</div>'+decos
+    +'<div class="ctw"><label class="ct" id="ct" title="點一下換成你的照片"><b>PLAYER 1</b><span>兒時太空人照片<br>點我放照片</span><input type="file" accept="image/*" hidden id="pf"></label></div>'
+    +items+'</div>';
+  setupPhoto();
+}
+function renderCat(id){
+  var c=CM[id];
+  var sl=slots(c.cards.length),n=c.cards.length,rows=Math.ceil(n/2);
+  var cards=c.cards.map(function(k,i){
+    var s=sl[i];
+    return '<a class="cd" href="#/e/'+c.id+'/'+i+'" style="--cx:'+s[0]+';--cy:'+s[1]+';--mr:'+Math.floor(i/2)+';--mc:'+(i%2)+';--t:'+TT[i]+'s;--d:'+DD[i]+'s;--dx:'+DX[i]+';--dy:'+DY[i]+';--r0:'+R0[i]+';--r1:'+R1[i]+'" aria-label="'+k.n+'">'
+      +'<div class="in"><div class="fc fr"><div class="sp">'+sv(k.ic)+'</div><span>'+k.n+'</span></div>'
+      +'<div class="fc bk"><b>[小標題]</b>[一句話介紹]<em>點進去 →</em></div></div></a>';
+  }).join('');
+  app.innerHTML='<div class="chead" style="--c:'+c.bg+'"><div class="sp">'+sv(c.ch)+'</div><div><h1>'+c.name+'</h1><p>'+c.intro+'</p></div></div>'
+    +'<p class="hint">'+(canHover?'碰到卡牌會翻面，點一下進去看完整故事。':'點一下卡牌翻面，再點一下進去看完整故事。')+'</p>'
+    +'<div class="cards" style="--c:'+c.bg+';--rows:'+rows+';--ar:'+(n<=3?'16/7.5':'16/10')+'">'+cards+'</div>'
+    +'<div class="btns"><a class="btn alt" href="#/">◀ 回首頁</a></div>';
+}
+function renderDetail(cid,i){
+  var c=CM[cid],k=c.cards[i];
+  var mini=c.cards.map(function(x,j){return '<a href="#/e/'+cid+'/'+j+'" class="'+(j===i?'cur':'')+'" aria-label="'+x.n+'"><div class="sp">'+sv(x.ic)+'</div></a>';}).join('');
+  app.innerHTML='<article class="dt" style="--c:'+c.bg+'">'
+    +'<div class="hd"><div class="sp">'+sv(k.ic)+'</div><div><h1>'+k.n+'</h1><div class="sub">['+c.name+' · 時間 · 你的角色]</div></div></div>'
+    +'<div class="blk"><h2>發生了什麼</h2><p>[這個事件的完整故事]</p></div>'
+    +'<div class="blk"><h2>我做了什麼 / 學到什麼</h2><p>[你實際負責的部分、遇到的問題、怎麼解決]</p></div>'
+    +'<div class="blk"><h2>成果與證明</h2><p>[名次、數據、照片、連結]</p></div>'
+    +'<div class="btns"><a class="btn" href="#/c/'+cid+'">◀ 回'+c.name+'</a><a class="btn alt" href="#/">回首頁</a></div>'
+    +'<div class="mini">'+mini+'</div></article>';
+}
+
+/* ---------- photo (stored only in this browser) ---------- */
+function setupPhoto(){
+  var ct=document.getElementById('ct'),pf=document.getElementById('pf');
+  try{var d=localStorage.getItem('enya_photo');if(d){ct.style.backgroundImage='url('+d+')';ct.classList.add('has');}}catch(err){}
+  pf.addEventListener('change',function(){
+    var f=pf.files&&pf.files[0];if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      var img=new Image();
+      img.onload=function(){
+        var s=Math.min(img.width,img.height),cv=document.createElement('canvas');cv.width=cv.height=480;
+        cv.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,480,480);
+        var u=cv.toDataURL('image/jpeg',.85);
+        ct.style.backgroundImage='url('+u+')';ct.classList.add('has');
+        try{localStorage.setItem('enya_photo',u);}catch(err){}
+      };
+      img.src=r.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+/* ---------- routing: #/  #/c/cat  #/e/cat/index ---------- */
+function route(){
+  var p=location.hash.replace(/^#\/?/,'').split('/');
+  if(p[0]==='c'&&CM[p[1]])renderCat(p[1]);
+  else if(p[0]==='e'&&CM[p[1]]&&CM[p[1]].cards[+p[2]])renderDetail(p[1],+p[2]);
+  else renderHome();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- touch: first tap reveals, second tap enters ---------- */
+function clearAct(){
+  document.querySelectorAll('.it.act,.cd.flip').forEach(function(n){n.classList.remove('act');n.classList.remove('flip');});
+}
+app.addEventListener('click',function(ev){
+  var a=ev.target.closest('a.it, a.cd');
+  if(!a){clearAct();return;}
+  if(canHover)return;
+  var cls=a.classList.contains('it')?'act':'flip';
+  if(!a.classList.contains(cls)){ev.preventDefault();clearAct();a.classList.add(cls);}
+});
+
+route();
+</script>
 </body>
 </html>
